@@ -5,7 +5,6 @@ html {
 }
 #result  {
     overflow: auto;
-    max-height: 40%;
 }
 i,
 .fa {

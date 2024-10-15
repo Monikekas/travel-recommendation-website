@@ -267,18 +267,39 @@ function search(event) {
       return response.json(); // pasrse the response
     })
     .then((data) => {
-        
-        
-        
-        construir(data);
-
-
-
+               
+        construir(filterByKeyword(data, dato));
     })
     .catch((error) => {
       console.log("An error ocurred : ", error);
     });
 }
+
+function filterByKeyword(data, keyword) {
+    const lowerKeyword = keyword.toLowerCase();
+    
+    function filterItems(items) {
+    return items.filter(item => 
+    item.name.toLowerCase().includes(lowerKeyword) || 
+    item.description.toLowerCase().includes(lowerKeyword)
+    );
+    }
+    
+    const filteredCountries = data.countries.map(country => ({
+    ...country,
+    cities: filterItems(country.cities)
+    })).filter(country => country.cities.length > 0);
+    
+    const filteredTemples = filterItems(data.temples);
+    const filteredBeaches = filterItems(data.beaches);
+    
+    return {
+    countries: filteredCountries,
+    temples: filteredTemples,
+    beaches: filteredBeaches
+    };
+    }
+
 function clear() {
   if (document.getElementById("inputSearch"))
     document.getElementById("inputSearch").value = "";
