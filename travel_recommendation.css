@@ -3,6 +3,10 @@ html {
   height: 100%;
   margin: 0px;
 }
+#result  {
+    overflow: auto;
+    max-height: 40%;
+}
 i,
 .fa {
   font-size: 2em !important;
@@ -144,4 +148,25 @@ input, textarea{
   color: white;
   margin-top: 20px !important;
   padding: 0 !important;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+  background-color: white;
+  border-radius: 10px;
+}
+
+
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+
+.conteiner p {
+    color: black !important;
 }

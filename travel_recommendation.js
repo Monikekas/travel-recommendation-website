@@ -97,7 +97,7 @@ function home() {
   child.appendChild(desc);
 
   const result = document.createElement("div");
-
+  result.id = "result";
   const rtitle = document.createElement("h2");
   rtitle.textContent = "Result";
   result.appendChild(rtitle);
@@ -253,9 +253,6 @@ function search(event) {
   const dato = document.getElementById("inputSearch")
     ? document.getElementById("inputSearch").value
     : null;
-
-  console.log("get json", dato);
-
   const options = {
     method: "GET",
     mode: "cors",
@@ -270,7 +267,13 @@ function search(event) {
       return response.json(); // pasrse the response
     })
     .then((data) => {
-      console.log(data);
+        
+        
+        
+        construir(data);
+
+
+
     })
     .catch((error) => {
       console.log("An error ocurred : ", error);
@@ -279,4 +282,62 @@ function search(event) {
 function clear() {
   if (document.getElementById("inputSearch"))
     document.getElementById("inputSearch").value = "";
+    construir([]);
+}
+
+function construir(datos){
+
+
+const beaches = datos.beaches ? datos.beaches : [];
+const countries = datos.countries ? datos.countries : [];
+const temples= datos.temples? datos.temples: [];
+
+const result = document.getElementById("result");
+
+
+
+const elements = document.getElementsByClassName("card");
+while(elements.length > 0){
+    result.removeChild(elements[0]);
+}
+
+
+    loopCard(beaches);
+
+      for ( pais of  countries) {
+
+        loopCard(pais.cities);
+
+      }
+
+
+      loopCard(temples);
+}
+
+function loopCard(arreglo){
+    for (dato of  arreglo) {
+        const card = document.createElement("div");
+        card.classList.add("card");
+
+        const conteiner = document.createElement("div");
+        conteiner.classList.add("conteiner");
+
+        const title = document.createElement("h2");
+        const desc = document.createElement("p");
+        const img = document.createElement("img");
+
+        img.style.width = "100%";
+
+        title.textContent = dato.name;
+        desc.textContent = dato.description;
+        img.src = dato.imageUrl;
+
+        card.appendChild(img)
+        conteiner.appendChild(title);
+        conteiner.appendChild(desc)
+
+        card.appendChild(conteiner)
+        result.appendChild(card)
+      }
+
 }
